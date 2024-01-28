@@ -159,7 +159,7 @@ export default function Sidebar(props) {
           <div className="sticky top-0 z-10 flex h-16 flex-shrink-0 justify-between border-b bg-white ">
             <button
               type="button"
-              className="border-r border-gray-200 px-4 text-gray-500 lg:hidden"
+              className="border-gray-200 text-gray-500 border-r px-4 lg:hidden"
               onClick={onOpen}
             >
               <HiMenuAlt2 className="h-6 w-6" />
@@ -191,7 +191,7 @@ export default function Sidebar(props) {
               </div>
             </div>
           </div>
-          <main>{props.children}</main>
+          <main className="min-h-screen bg-[#F8F7FB]">{props.children}</main>
         </div>
       </Flex>
     </>

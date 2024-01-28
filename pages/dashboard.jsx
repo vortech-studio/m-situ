@@ -7,8 +7,10 @@ import {
 import { useMemo, useState } from "react";
 import SideBar from "../components/layouts/sideBar";
 import { markers } from "../lib/data";
+import { useRouter } from "next/router";
 
 export default function Page() {
+  const router = useRouter();
   const libraries = useMemo(() => ["places"], []);
 
   const mapCenter = useMemo(() => ({ lat: -0.609559, lng: 35.7354353 }), []);
@@ -22,7 +24,14 @@ export default function Page() {
 
   if (!isLoaded) return;
 
-  const handleMarkerClick = (marker) => {};
+  const handleMarkerClick = (marker) => {
+    router.push({
+      pathname: "/devices/[id]",
+      query: {
+        id: marker.id,
+      },
+    });
+  };
 
   const handleMarkerHover = (marker) => {
     setSelectedMarker(marker);
@@ -34,7 +43,7 @@ export default function Page() {
 
   return (
     <div className="flex h-screen w-full flex-col">
-      <div className="flex h-48 w-1/4 flex-col p-4"></div>
+      {/* <div className="flex h-48 w-1/4 flex-col p-4"></div> */}
       <div className="flex-1">
         <GoogleMap
           zoom={14}
@@ -46,15 +55,15 @@ export default function Page() {
             <MarkerF
               key={index}
               position={marker.position}
-              title={marker.title}
+              title={marker.name}
               onClick={() => handleMarkerClick(marker)}
               onMouseOver={() => handleMarkerHover(marker)}
-              onMouseOut={() => handleInfoWindowClose}
+              onMouseOut={handleInfoWindowClose}
             >
               {selectedMarker === marker && (
                 <InfoWindow onCloseClick={handleInfoWindowClose}>
                   <div>
-                    <p>{marker.title}</p>
+                    <p>{marker.name}</p>
                   </div>
                 </InfoWindow>
               )}

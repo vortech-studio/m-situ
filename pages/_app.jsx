@@ -1,13 +1,15 @@
 import "@/styles/globals.css";
 import { ChakraProvider, theme } from "@chakra-ui/react";
 import { Nunito } from "next/font/google";
+import Head from "next/head";
 import { useRouter } from "next/router";
+import { Suspense, useEffect } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { RecoilRoot } from "recoil";
-import { auth } from "../lib/firebase";
-import { useEffect } from "react";
-import Head from "next/head";
 import LoadingBar from "../components/animations/loadingBar";
+import ErrorFallback from "../components/error/errorFallback";
+import { auth } from "../lib/firebase";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -18,23 +20,32 @@ export default function App({ Component, pageProps }) {
       <Head>
         <title>M-Situ Dashboard</title>
       </Head>
-      <RecoilRoot>
-        <ChakraProvider theme={theme}>
-          {Component.auth ? (
-            <Auth>
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-            </Auth>
-          ) : (
-            <>
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-            </>
-          )}
-        </ChakraProvider>
-      </RecoilRoot>
+      <ErrorBoundary
+        FallbackComponent={ErrorFallback}
+        onReset={() => {
+          router.back();
+        }}
+      >
+        <Suspense fallback={<LoadingBar />}>
+          <RecoilRoot>
+            <ChakraProvider theme={theme}>
+              {Component.auth ? (
+                <Auth>
+                  <Layout>
+                    <Component {...pageProps} />
+                  </Layout>
+                </Auth>
+              ) : (
+                <>
+                  <Layout>
+                    <Component {...pageProps} />
+                  </Layout>
+                </>
+              )}
+            </ChakraProvider>
+          </RecoilRoot>
+        </Suspense>
+      </ErrorBoundary>
     </div>
   );
 }
