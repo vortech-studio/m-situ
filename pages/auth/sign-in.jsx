@@ -144,8 +144,8 @@ export default function Page() {
       <div className="relative hidden w-0 flex-1 lg:block">
         <Image
           src="/images/forest.jpg"
-          alt=""
-          layout="fill"
+          alt="Forest"
+          fill={true}
           className="object-cover"
         />
       </div>
