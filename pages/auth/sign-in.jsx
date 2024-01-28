@@ -146,7 +146,7 @@ export default function Page() {
           src="/images/forest.jpg"
           alt=""
           layout="fill"
-          objectFit="cover"
+          className="object-cover"
         />
       </div>
     </div>
