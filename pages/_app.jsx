@@ -6,6 +6,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { RecoilRoot } from "recoil";
 import { auth } from "../lib/firebase";
 import { useEffect } from "react";
+import Head from "next/head";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -13,6 +14,9 @@ export default function App({ Component, pageProps }) {
   const Layout = Component.layout || (({ children }) => <>{children}</>);
   return (
     <div className={`${nunito.className}`}>
+      <Head>
+        <title>M-Situ Dashboard</title>
+      </Head>
       <RecoilRoot>
         <ChakraProvider theme={theme}>
           {Component.auth ? (
