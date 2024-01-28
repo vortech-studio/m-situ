@@ -7,6 +7,7 @@ import { RecoilRoot } from "recoil";
 import { auth } from "../lib/firebase";
 import { useEffect } from "react";
 import Head from "next/head";
+import LoadingBar from "../components/animations/loadingBar";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -47,7 +48,7 @@ function Auth({ children }) {
     if (!user && !loading) router.replace("/auth/sign-in");
   }, [error, loading, router, user]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingBar />;
 
   if (user) return children;
 }
