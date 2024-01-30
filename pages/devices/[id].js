@@ -37,7 +37,7 @@ export default function Page() {
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-6 md:grid-cols-4">
         {[
           { label: "Temperature", value: "24°C" },
-          { label: "Humudity", value: "44%" },
+          { label: "Humidity", value: "44%" },
         ].map((data, i) => (
           <Card key={i} data={data} />
         ))}
