@@ -1,5 +1,6 @@
 import { db } from "@/lib/firebase";
-import { doc, setDoc, Timestamp } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
+import { v4 as uuidv4 } from "uuid";
 
 export default async function handler(req, res) {
   try {
@@ -7,25 +8,29 @@ export default async function handler(req, res) {
 
     const device_id = data.device_id;
 
-    const currentTimestamp = Timestamp.now();
+    if (data.alerts) {
+      const alertId = uuidv4();
+      const alertsCollectionRef = doc(
+        db,
+        "devices",
+        device_id,
+        "alerts",
+        alertId
+      );
+      await setDoc(alertsCollectionRef, data.alerts);
+    }
 
-    const alertsCollectionRef = doc(
-      db,
-      "devices",
-      device_id,
-      "alerts",
-      currentTimestamp.toString()
-    );
-    await setDoc(alertsCollectionRef, data.alert);
-
-    const dataCollectionRef = doc(
-      db,
-      "devices",
-      device_id,
-      "data",
-      currentTimestamp.toString()
-    );
-    await setDoc(dataCollectionRef, data.routine);
+    if (data.routine) {
+      const routineId = uuidv4();
+      const dataCollectionRef = doc(
+        db,
+        "devices",
+        device_id,
+        "data",
+        routineId
+      );
+      await setDoc(dataCollectionRef, data.routine);
+    }
 
     res.status(200).json({ message: "Data received successfully", data });
   } catch (error) {
