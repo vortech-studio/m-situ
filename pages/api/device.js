@@ -5,6 +5,10 @@ import { v4 as uuidv4 } from "uuid";
 export default async function handler(req, res) {
   try {
     const data = req.body;
+
+    // Add a timestamp field to the data object
+    data.timestamp = new Date();
+
     console.log(data);
 
     const device_id = data.device_id;
