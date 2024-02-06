@@ -1,23 +1,31 @@
 import { db } from "@/lib/firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, Timestamp } from "firebase/firestore";
 
 export default async function handler(req, res) {
   try {
-    console.log("Received data:", data);
-
     const data = req.body;
 
     const device_id = data.device_id;
 
-    if (data.alert) {
-      const alertsCollectionRef = doc(db, "devices", device_id, "alerts");
-      await setDoc(alertsCollectionRef, data.alert);
-    }
+    const currentTimestamp = Timestamp.now();
 
-    if (data.routine) {
-      const dataCollectionRef = doc(db, "devices", device_id, "routine");
-      await setDoc(dataCollectionRef, data.routine);
-    }
+    const alertsCollectionRef = doc(
+      db,
+      "devices",
+      device_id,
+      "alerts",
+      currentTimestamp.toString()
+    );
+    await setDoc(alertsCollectionRef, data.alert);
+
+    const dataCollectionRef = doc(
+      db,
+      "devices",
+      device_id,
+      "data",
+      currentTimestamp.toString()
+    );
+    await setDoc(dataCollectionRef, data.routine);
 
     res.status(200).json({ message: "Data received successfully", data });
   } catch (error) {
