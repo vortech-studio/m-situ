@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     const data = req.body;
 
     // Add a timestamp field to the data object
-    data.timestamp = new Date();
+    const timestamp = new Date();
 
     console.log(data);
 
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
         "alerts",
         alertId
       );
-      await setDoc(alertsCollectionRef, data.alerts);
+      await setDoc(alertsCollectionRef, { ...data.alerts, timestamp });
     }
 
     if (data.routine) {
@@ -34,7 +34,7 @@ export default async function handler(req, res) {
         "data",
         routineId
       );
-      await setDoc(dataCollectionRef, data.routine);
+      await setDoc(dataCollectionRef, { ...data.routine, timestamp });
     }
 
     res.status(200).json({ message: "Data received successfully", data });
