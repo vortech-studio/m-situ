@@ -1,30 +1,23 @@
 import { db } from "@/lib/firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 export default async function handler(req, res) {
-  // if (req.method !== "POST") {
-  //   return res.status(405).json({ message: "Method Not Allowed" });
-  // }
-
   try {
-    const data = req.body;
-
     console.log("Received data:", data);
+
+    const data = req.body;
 
     const device_id = data.device_id;
 
     if (data.alert) {
-      const alertsCollectionRef = db
-        .collection("devices")
-        .doc(device_id)
-        .collection("alerts");
-      alertsCollectionRef.add(data.alert);
+      const alertsCollectionRef = doc(db, "devices", device_id, "alerts");
+      await setDoc(alertsCollectionRef, data.alert);
     }
 
-    // const dataCollectionRef = db
-    //   .collection("devices")
-    //   .doc(device_id)
-    //   .collection("data");
-    // dataCollectionRef.add(data);
+    if (data.routine) {
+      const dataCollectionRef = doc(db, "devices", device_id, "routine");
+      await setDoc(dataCollectionRef, data.routine);
+    }
 
     res.status(200).json({ message: "Data received successfully", data });
   } catch (error) {
