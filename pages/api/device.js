@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    // const data = req.body;
+    const data = req.body;
 
     // const device_id = data.device_id;
 
