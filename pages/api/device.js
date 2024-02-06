@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 export default async function handler(req, res) {
   try {
     const data = req.body;
+    console.log(data);
 
     const device_id = data.device_id;
 
