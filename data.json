@@ -1,0 +1,5 @@
+{
+  "alert": { "sensor_type": "Noise Levels", "sensor_value": 109.4667 },
+  "device_id": "M-SITU-001",
+  "location": { "longitude": "t", "latitude": "h" }
+}
