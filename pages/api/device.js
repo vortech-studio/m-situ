@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 
     const device_id = data.device_id;
 
-    if (data.alerts) {
+    if (data.alert) {
       const alertId = uuidv4();
       const alertsCollectionRef = doc(
         db,
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
         "alerts",
         alertId
       );
-      await setDoc(alertsCollectionRef, { ...data.alerts, timestamp });
+      await setDoc(alertsCollectionRef, { ...data.alert, timestamp });
     }
 
     if (data.routine) {
