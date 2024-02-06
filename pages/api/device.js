@@ -26,7 +26,7 @@ export default async function handler(req, res) {
     //   .collection("data");
     // dataCollectionRef.add(data);
 
-    res.status(200).json({ message: "Data received successfully" });
+    res.status(200).json({ message: "Data received successfully", data });
   } catch (error) {
     console.error("Error processing data:", error);
     res.status(500).json({ message: "Internal Server Error" });
