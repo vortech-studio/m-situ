@@ -45,7 +45,8 @@ export default function Page() {
     <div className="flex h-screen w-full flex-col">
       {/* <div className="flex h-48 w-1/4 flex-col p-4"></div> */}
       <div className="flex flex-1">
-        <div className="w-96 bg-white p-8">
+        <div className="w-96 space-y-2 bg-white p-4">
+          <h2 className="text-xl">Alerts</h2>
           <div className="h-24 w-full rounded border border-slate-100 shadow-md"></div>
         </div>
         <div className="h-full grow">

@@ -8,15 +8,17 @@ export default async function handler(req, res) {
   try {
     const data = req.body;
 
-    // const device_id = data.device_id;
+    console.log("Received data:", data);
 
-    // if (data.alert) {
-    //   const alertsCollectionRef = db
-    //     .collection("devices")
-    //     .doc(device_id)
-    //     .collection("alerts");
-    //   alertsCollectionRef.add(data.alert);
-    // }
+    const device_id = data.device_id;
+
+    if (data.alert) {
+      const alertsCollectionRef = db
+        .collection("devices")
+        .doc(device_id)
+        .collection("alerts");
+      alertsCollectionRef.add(data.alert);
+    }
 
     // const dataCollectionRef = db
     //   .collection("devices")
