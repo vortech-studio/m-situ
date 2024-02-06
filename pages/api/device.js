@@ -31,7 +31,7 @@ export default async function handler(req, res) {
         db,
         "devices",
         device_id,
-        "data",
+        "routine",
         routineId
       );
       await setDoc(dataCollectionRef, { ...data.routine, timestamp });
