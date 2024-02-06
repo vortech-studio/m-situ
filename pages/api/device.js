@@ -1,5 +1,3 @@
-// pages/api/postData.js
-
 import { db } from "@/lib/firebase";
 
 export default async function handler(req, res) {
@@ -8,17 +6,17 @@ export default async function handler(req, res) {
   }
 
   try {
-    const data = req.body;
+    // const data = req.body;
 
-    const device_id = data.device_id;
+    // const device_id = data.device_id;
 
-    if (data.alert) {
-      const alertsCollectionRef = db
-        .collection("devices")
-        .doc(device_id)
-        .collection("alerts");
-      alertsCollectionRef.add(data.alert);
-    }
+    // if (data.alert) {
+    //   const alertsCollectionRef = db
+    //     .collection("devices")
+    //     .doc(device_id)
+    //     .collection("alerts");
+    //   alertsCollectionRef.add(data.alert);
+    // }
 
     // const dataCollectionRef = db
     //   .collection("devices")
