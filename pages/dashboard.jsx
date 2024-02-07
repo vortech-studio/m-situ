@@ -94,7 +94,7 @@ export default function Page() {
         </div>
         <div className="h-full grow pb-12">
           <GoogleMap
-            zoom={14}
+            zoom={12}
             center={mapCenter}
             mapTypeId={google.maps.MapTypeId.HYBRID}
             mapContainerStyle={{ width: "100%", height: "100%" }}
