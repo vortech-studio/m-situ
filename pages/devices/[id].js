@@ -44,14 +44,14 @@ export default function Page() {
           },
         ]}
       />
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-6 md:grid-cols-4">
+      {/* <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-6 md:grid-cols-4">
         {[
           { label: "Temperature", value: "24°C" },
           { label: "Humidity", value: "44%" },
         ].map((data, i) => (
           <Card key={i} data={data} />
         ))}
-      </div>
+      </div> */}
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <div className="rounded-lg border-[0.5px] bg-white p-4 shadow">
           <LineChart title={"Temperature"} />

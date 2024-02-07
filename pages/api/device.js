@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export default async function handler(req, res) {
   try {
-    const data = req.body;
+    const data = JSON.parse(req.body);
 
     // Add a timestamp field to the data object
     const timestamp = new Date();
