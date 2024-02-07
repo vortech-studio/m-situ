@@ -9,6 +9,7 @@ import SideBar from "../components/layouts/sideBar";
 import { markers } from "../lib/data";
 import { useRouter } from "next/router";
 import { getAlerts } from "../services/devices";
+import Link from "next/link";
 
 export default function Page() {
   const router = useRouter();
@@ -64,7 +65,15 @@ export default function Page() {
           <h2 className="text-xl font-bold text-primary">Alerts</h2>
           <div className="space-y-4 overflow-y-scroll">
             {alerts.map((alert, i) => (
-              <div key={i}>
+              <Link
+                href={{
+                  pathname: "/devices/[id]",
+                  query: { id: alert.id },
+                }}
+                key={i}
+                className="p-1"
+                passHref
+              >
                 <div className="w-full rounded border border-slate-100 bg-white p-4 shadow-md">
                   <p className="font-semibold text-blue-800">
                     {alert.id} Device
@@ -73,7 +82,7 @@ export default function Page() {
                   <p>{alert.sensor_type}</p>
                   <p>{alert.sensor_value}</p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
