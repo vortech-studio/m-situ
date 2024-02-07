@@ -46,7 +46,7 @@ export default function Page() {
 
   useEffect(() => {
     if (!isLoaded) return;
-    setLoading(true);
+    setLoading(false);
     getAlerts()
       .then((data) => {
         setAlerts(data.alerts);
@@ -67,9 +67,9 @@ export default function Page() {
   return (
     <div className="flex h-screen w-full flex-col">
       <div className="flex flex-1 flex-col lg:flex-row">
-        <div className="w-96 space-y-2 p-4">
+        <div className="h-screen w-96 space-y-2 overflow-y-scroll p-4">
           <h2 className="text-xl font-bold text-primary">Alerts</h2>
-          <div className="space-y-4 overflow-y-scroll">
+          <div className="space-y-4">
             {alerts.map((alert, i) => (
               <Link
                 href={{
