@@ -58,13 +58,16 @@ export default function Page() {
   if (!isLoaded) return null;
   return (
     <div className="flex h-screen w-full flex-col">
-      <div className="flex flex-1">
-        <div className="w-96 space-y-2 bg-white p-4">
-          <h2 className="text-xl">Alerts</h2>
+      <div className="flex flex-1 flex-col lg:flex-row">
+        <div className="w-96 space-y-2 p-4">
+          <h2 className="text-xl font-bold text-primary">Alerts</h2>
           <div className="space-y-4">
             {alerts.map((alert, i) => (
               <div key={i}>
                 <div className="w-full rounded border border-slate-100 p-4 shadow-md">
+                  <p className="font-semibold text-blue-800">
+                    {alert.id} Device
+                  </p>
                   <h3>{alert.timestamp.toDate().toLocaleString()}</h3>
                   <p>{alert.sensor_type}</p>
                   <p>{alert.sensor_value}</p>
@@ -73,7 +76,7 @@ export default function Page() {
             ))}
           </div>
         </div>
-        <div className="h-full grow">
+        <div className="h-full grow pb-12">
           <GoogleMap
             zoom={14}
             center={mapCenter}

@@ -21,12 +21,13 @@ export async function getAlerts() {
     const devices = [];
 
     const promises = devicesSnapshot.docs.map(async (deviceDoc) => {
+      devices.push(deviceDoc.data());
       const alertsCollectionRef = collection(deviceDoc.ref, "alerts");
       const alertsSnapshot = await getDocs(alertsCollectionRef);
 
       alertsSnapshot.forEach((alertDoc) => {
         const alertData = alertDoc.data();
-        alerts.push(alertData);
+        alerts.push({ ...alertData, id: deviceDoc.ref.id });
       });
     });
 
