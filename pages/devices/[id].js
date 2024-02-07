@@ -5,18 +5,28 @@ import { LineChart } from "../../components/charts/lineChart";
 import Sidebar from "../../components/layouts/sideBar";
 import Breadcrumbs from "../../components/navigation/breadcrumbs";
 import { Card } from "../../components/statistics/card";
-import { getDeviceByID } from "../../services/devices";
+import { getDeviceByID, getDeviceRoutineByID } from "../../services/devices";
 
 export default function Page() {
   const router = useRouter();
   const { id } = router.query;
   const [data, setData] = useState();
+  const [routine, setRoutine] = useState();
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
     getDeviceByID(id)
-      .then((data) => setData(data))
+      .then((data) => {
+        setData(data);
+      })
+      .then(() =>
+        getDeviceRoutineByID(id).then((data) => {
+          setRoutine(data);
+          console.log(data);
+        })
+      )
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
   }, []);
@@ -29,8 +39,8 @@ export default function Page() {
         pages={[
           { name: "Devices", href: "/devices" },
           {
-            name: data.name,
-            href: `/devices/${data.name}`,
+            name: data.id,
+            href: `/devices/${data.id}`,
           },
         ]}
       />

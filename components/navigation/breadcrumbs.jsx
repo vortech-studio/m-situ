@@ -14,7 +14,7 @@ export default function Breadcrumbs({ pages }) {
         </li>
         {pages.map((page, i) => (
           <li
-            key={page.name}
+            key={i}
             className={`${pages.length == i + 2 ? "block" : "hidden sm:block"}`}
           >
             <div className="flex items-center gap-2">
