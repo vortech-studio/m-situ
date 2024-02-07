@@ -4,16 +4,20 @@ import {
   MarkerF,
   useJsApiLoader,
 } from "@react-google-maps/api";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import SideBar from "../components/layouts/sideBar";
 import { markers } from "../lib/data";
 import { useRouter } from "next/router";
+import { getAlerts } from "../services/devices";
 
 export default function Page() {
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [alerts, setAlerts] = useState([]);
+  const [devices, setDevices] = useState([]);
   const libraries = useMemo(() => ["places"], []);
 
-  const mapCenter = useMemo(() => ({ lat: -0.609559, lng: 35.7354353 }), []);
+  const mapCenter = useMemo(() => ({ lat: -1.2505813, lng: 36.8465876 }), []);
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: "AIzaSyA0PO4lopgu3pLhFhgptyByuG9jAQQDsuM",
@@ -22,32 +26,52 @@ export default function Page() {
 
   const [selectedMarker, setSelectedMarker] = useState(null);
 
-  if (!isLoaded) return;
-
-  const handleMarkerClick = (marker) => {
+  const handleMarkerClick = (device) => {
     router.push({
       pathname: "/devices/[id]",
       query: {
-        id: marker.id,
+        id: device.id,
       },
     });
   };
 
-  const handleMarkerHover = (marker) => {
-    setSelectedMarker(marker);
+  const handleMarkerHover = (device) => {
+    setSelectedMarker(device);
   };
 
   const handleInfoWindowClose = () => {
     setSelectedMarker(null);
   };
 
+  useEffect(() => {
+    if (!isLoaded) return;
+    setLoading(true);
+    getAlerts()
+      .then((data) => {
+        setAlerts(data.alerts);
+        setDevices(data.devices);
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setLoading(false));
+  }, [isLoaded]);
+
+  if (!isLoaded) return null;
   return (
     <div className="flex h-screen w-full flex-col">
-      {/* <div className="flex h-48 w-1/4 flex-col p-4"></div> */}
       <div className="flex flex-1">
         <div className="w-96 space-y-2 bg-white p-4">
           <h2 className="text-xl">Alerts</h2>
-          <div className="h-24 w-full rounded border border-slate-100 shadow-md"></div>
+          <div className="space-y-4">
+            {alerts.map((alert, i) => (
+              <div key={i}>
+                <div className="w-full rounded border border-slate-100 p-4 shadow-md">
+                  <h3>{alert.timestamp.toDate().toLocaleString()}</h3>
+                  <p>{alert.sensor_type}</p>
+                  <p>{alert.sensor_value}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="h-full grow">
           <GoogleMap
@@ -56,19 +80,19 @@ export default function Page() {
             mapTypeId={google.maps.MapTypeId.HYBRID}
             mapContainerStyle={{ width: "100%", height: "100%" }}
           >
-            {markers.map((marker, index) => (
+            {devices.map((device, index) => (
               <MarkerF
                 key={index}
-                position={marker.position}
-                title={marker.name}
-                onClick={() => handleMarkerClick(marker)}
-                onMouseOver={() => handleMarkerHover(marker)}
+                position={device.position}
+                title={device.name}
+                onClick={() => handleMarkerClick(device)}
+                onMouseOver={() => handleMarkerHover(device)}
                 onMouseOut={handleInfoWindowClose}
               >
-                {selectedMarker === marker && (
+                {selectedMarker === device && (
                   <InfoWindow onCloseClick={handleInfoWindowClose}>
                     <div>
-                      <p>{marker.name}</p>
+                      <p>{device.name}</p>
                     </div>
                   </InfoWindow>
                 )}
