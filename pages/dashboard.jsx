@@ -4,12 +4,12 @@ import {
   MarkerF,
   useJsApiLoader,
 } from "@react-google-maps/api";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import SideBar from "../components/layouts/sideBar";
-import { markers } from "../lib/data";
-import { useRouter } from "next/router";
 import { getAlerts } from "../services/devices";
-import Link from "next/link";
+import { onSnapshot } from "firebase/firestore";
 
 export default function Page() {
   const router = useRouter();
@@ -56,6 +56,12 @@ export default function Page() {
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
   }, [isLoaded]);
+
+  // useEffect(() => {
+  //   const unsub = onSnapshot(doc(db, "devices", "M-SITU-001"), (doc) => {
+  //     console.log("Current data: ", doc.data());
+  //   });
+  // }, [third]);
 
   if (!isLoaded) return null;
   return (

@@ -36,11 +36,17 @@ export async function getAlerts() {
 
       alertsSnapshot.forEach((alertDoc) => {
         const alertData = alertDoc.data();
-        alerts.push({ ...alertData, id: deviceDoc.ref.id });
+        alerts.push({
+          ...alertData,
+          id: deviceDoc.ref.id,
+        });
       });
     });
 
     await Promise.all(promises);
+
+    // Sort alerts based on timestamp in descending order
+    alerts.sort((a, b) => b.timestamp.toMillis() - a.timestamp.toMillis());
 
     return { alerts, devices };
   } catch (error) {
