@@ -56,9 +56,9 @@ export default function Page() {
         <div className="rounded-lg border-[0.5px] bg-white p-4 shadow">
           <LineChart title={"Temperature"} />
         </div>
-        <div className="rounded-lg border-[0.5px] bg-white p-4 shadow">
+        {/* <div className="rounded-lg border-[0.5px] bg-white p-4 shadow">
           <LineChart title={"Humidity"} />
-        </div>
+        </div> */}
       </div>
     </div>
   );
