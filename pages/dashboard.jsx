@@ -50,6 +50,7 @@ export default function Page() {
       .then((data) => {
         setAlerts(data.alerts);
         setDevices(data.devices);
+        console.log(data.devices);
       })
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
@@ -61,10 +62,10 @@ export default function Page() {
       <div className="flex flex-1 flex-col lg:flex-row">
         <div className="w-96 space-y-2 p-4">
           <h2 className="text-xl font-bold text-primary">Alerts</h2>
-          <div className="space-y-4">
+          <div className="space-y-4 overflow-y-scroll">
             {alerts.map((alert, i) => (
               <div key={i}>
-                <div className="w-full rounded border border-slate-100 p-4 shadow-md">
+                <div className="w-full rounded border border-slate-100 bg-white p-4 shadow-md">
                   <p className="font-semibold text-blue-800">
                     {alert.id} Device
                   </p>
@@ -87,7 +88,7 @@ export default function Page() {
               <MarkerF
                 key={index}
                 position={device.position}
-                title={device.name}
+                title={device.id}
                 onClick={() => handleMarkerClick(device)}
                 onMouseOver={() => handleMarkerHover(device)}
                 onMouseOut={handleInfoWindowClose}
@@ -95,7 +96,7 @@ export default function Page() {
                 {selectedMarker === device && (
                   <InfoWindow onCloseClick={handleInfoWindowClose}>
                     <div>
-                      <p>{device.name}</p>
+                      <p>{device.id}</p>
                     </div>
                   </InfoWindow>
                 )}

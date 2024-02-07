@@ -21,7 +21,7 @@ export async function getAlerts() {
     const devices = [];
 
     const promises = devicesSnapshot.docs.map(async (deviceDoc) => {
-      devices.push(deviceDoc.data());
+      devices.push({ ...deviceDoc.data(), id: deviceDoc.ref.id });
       const alertsCollectionRef = collection(deviceDoc.ref, "alerts");
       const alertsSnapshot = await getDocs(alertsCollectionRef);
 
