@@ -149,12 +149,12 @@ export default function Sidebar(props) {
         >
           <DrawerOverlay />
           <DrawerContent>
-            <SideBarContent />
+            {/* <SideBarContent /> */}
           </DrawerContent>
         </Drawer>
       )}
       <Flex height="100vh">
-        {!isMobile && <SideBarContent />}
+        {/* {!isMobile && <SideBarContent />} */}
         <div className="flex-1 overflow-y-auto">
           <div className="sticky top-0 z-10 flex h-16 flex-shrink-0 justify-between border-b bg-white ">
             <button
